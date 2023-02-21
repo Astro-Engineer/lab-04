@@ -14,7 +14,9 @@ def on_connect(client, userdata, flags, rc):
 
 if __name__ == '__main__':
     #get IP address
-    ip_address=0 
+    #https://www.c-sharpcorner.com/blogs/how-to-find-ip-address-in-python
+    hostname=socket.gethostname()
+    ip_address=socket.gethostbyname(hostname) 
     """your code here"""
     #create a client object
     client = mqtt.Client()
@@ -41,11 +43,19 @@ if __name__ == '__main__':
 
     while True:
         #replace user with your USC username in all subscriptions
-        client.publish("user/ipinfo", f"{ip_address}")
+        client.publish("iclee/ipinfo", f"{ip_address}")
         print("Publishing ip address")
         time.sleep(4)
 
         #get date and time 
+        now = datetime.now()
         """your code here"""
         #publish date and time in their own topics
+        time_date = now.strftime("%d/%m/%Y")
+        client.publish("iclee/dateinfo", f"{time_date}")
+        print("date =", time_date)
+        time_time = now.strftime("%H:%M:%S")
+        client.publish("iclee/timeinfo", f"{time_time}")
+        print("date =", time_time)
+        
         """your code here"""
